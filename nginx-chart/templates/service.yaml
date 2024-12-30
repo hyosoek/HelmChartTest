@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}        # Service 포트
+      targetPort: {{ .Values.service.targetPort }}  # 파드 포트
+      nodePort: {{ .Values.service.nodePort }}      # 노드 포트 (NodePort 타입일 경우)
+  type: {{ .Values.service.type }}                  # 외부에서 접근 가능하도록 LoadBalancer 타입 사용 (클라우드 환경)
+  # type: NodePort                                   # 클라우드 환경이 아닌 경우 NodePort 타입 사용
+
